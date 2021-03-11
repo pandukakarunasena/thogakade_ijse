@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ItemSelectionController">
+   <children>
+      <TextField layoutX="98.0" layoutY="14.0" promptText="search item" />
+      <Button layoutX="258.0" layoutY="14.0" mnemonicParsing="false" text="search" />
+      <TableView fx:id="itemsTable" layoutX="25.0" layoutY="63.0" onMouseClicked="#selectItem" prefHeight="274.0" prefWidth="351.0">
+        <columns>
+          <TableColumn fx:id="colCode" prefWidth="42.0" text="code" />
+          <TableColumn fx:id="colDescription" prefWidth="215.0" text="description" />
+            <TableColumn fx:id="colQtyOnHand" prefWidth="107.0" text="qty on hand" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="dashboardPane" prefHeight="400.0" prefWidth="1200.0" style="-fx-background-color: #CED2CC;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.DashboardFormController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="168.0" style="-fx-background-color: #003f5c;">
+         <children>
+            <Button fx:id="btnAddNewOrder" layoutX="23.0" layoutY="158.0" mnemonicParsing="false" onAction="#addNewOrder" prefHeight="31.0" prefWidth="123.0" style="-fx-background-color: #b3c100;" text="New Order">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnAddCustomer" layoutX="23.0" layoutY="113.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="31.0" prefWidth="123.0" style="-fx-background-color: #b3c100;" text="Add Customer">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnAddItem" layoutX="23.0" layoutY="67.0" mnemonicParsing="false" onAction="#addItem" prefHeight="31.0" prefWidth="123.0" style="-fx-background-color: #b3c100;" text="Add Item">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="549.0" layoutY="53.0" prefHeight="319.0" prefWidth="242.0" style="-fx-background-color: white; -fx-border-color: black;">
+         <children>
+            <Label layoutX="73.0" layoutY="133.0" text="Total Sales">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalSales" alignment="CENTER" layoutX="80.0" layoutY="160.0" prefHeight="53.0" prefWidth="133.0" text="Label" textAlignment="CENTER" textFill="#b3c100">
+               <font>
+                  <Font name="Fira Code Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="42.0" text="Total Items Ordered" />
+            <Label layoutX="159.0" layoutY="42.0" text="Storage" />
+            <Label fx:id="lblItemOrdered" alignment="CENTER" layoutX="7.0" layoutY="59.0" prefHeight="45.0" prefWidth="116.0" text="Label" textFill="#003f5c">
+               <font>
+                  <Font name="Fira Code Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblStorage" alignment="CENTER" layoutX="122.0" layoutY="59.0" prefHeight="45.0" prefWidth="116.0" text="Label" textFill="#003f5c">
+               <font>
+                  <Font name="Fira Code Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalSales1" alignment="CENTER" layoutX="14.0" layoutY="160.0" prefHeight="53.0" prefWidth="78.0" text="Rs." textAlignment="CENTER" textFill="#b3c100">
+               <font>
+                  <Font name="Fira Code Bold" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label alignment="CENTER" prefHeight="30.0" prefWidth="1200.0" text="Thoga Kade" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="182.0" layoutY="25.0" text="Recent Orders">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="182.0" layoutY="222.0" text="Completed Orders">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="804.0" layoutY="25.0" text="Item Availability">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TableView fx:id="dbRecentOrdersTable" layoutX="182.0" layoutY="53.0" prefHeight="166.0" prefWidth="355.0" style="-fx-border-color: black;">
+        <columns>
+          <TableColumn fx:id="colOrderIdRecOrd" prefWidth="75.0" text="order Id" />
+          <TableColumn fx:id="colCustomerNameRecOrd" prefWidth="109.0" text="customer name" />
+            <TableColumn fx:id="colTotalPriceRecOrd" prefWidth="75.0" text="total price" />
+            <TableColumn fx:id="colDateRecOrd" prefWidth="75.0" text="date" />
+        </columns>
+      </TableView>
+      <TableView fx:id="dbCompletedOrdersTable" layoutX="182.0" layoutY="248.0" prefHeight="125.0" prefWidth="355.0" style="-fx-border-color: black;">
+        <columns>
+          <TableColumn prefWidth="75.0" text="order Id" />
+          <TableColumn prefWidth="75.0" text="total price" />
+        </columns>
+      </TableView>
+      <TableView fx:id="dbItemAvalTable" layoutX="804.0" layoutY="53.0" prefHeight="319.0" prefWidth="371.0" style="-fx-border-color: black;">
+        <columns>
+          <TableColumn fx:id="colCodeItemAval" prefWidth="35.0" text="code" />
+          <TableColumn fx:id="colDescriptionItemAval" prefWidth="198.0" text="description" />
+            <TableColumn fx:id="colUnitItemAval" prefWidth="130.0" text="units" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
