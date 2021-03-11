@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="itemFormPane" prefHeight="400.0" prefWidth="1200.0" style="-fx-background-color: #CED2CC;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ItemFormController">
+<AnchorPane fx:id="itemFormPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1200.0" style="-fx-background-color: #CED2CC;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ItemFormController">
    <children>
       <Label alignment="CENTER" prefHeight="30.0" prefWidth="1200.0" style="-fx-background-color: #003f5c;" text="Item List" textAlignment="CENTER" textFill="WHITE">
          <font>
@@ -47,10 +48,17 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button fx:id="btnReloadTable" layoutX="312.0" layoutY="346.0" mnemonicParsing="false" onAction="#reloadItemTable" prefHeight="25.0" prefWidth="112.0" text="Reload Table" />
-      <Button fx:id="btnBack" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#back" text="Back">
+      <Button fx:id="btnReloadTable" layoutX="450.0" layoutY="360.0" mnemonicParsing="false" onAction="#reloadItemTable" prefHeight="28.0" prefWidth="32.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="REFRESH" size="20" />
+         </graphic></Button>
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#back">
          <font>
             <Font name="System Bold" size="15.0" />
-         </font></Button>
+         </font>
+         <graphic>
+            <FontAwesomeIconView glyphName="ARROW_LEFT" size="20" />
+         </graphic></Button>
+      <FontAwesomeIconView fill="WHITE" glyphName="APPLE" layoutX="540.0" layoutY="22.0" size="20" />
    </children>
 </AnchorPane>

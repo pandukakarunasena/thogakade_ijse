@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -17,6 +18,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
         primaryStage.setTitle("Thoga Kade");
         primaryStage.setScene(new Scene(root, 1200, 400));
+        primaryStage.setResizable(false);
+        //primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.show();
     }
 

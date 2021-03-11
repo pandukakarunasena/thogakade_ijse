@@ -121,6 +121,7 @@ public class OrderFormController {
             stage.setTitle("invoice");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(selectionWindow, 350, 400));
+            stage.setResizable(false);
             stage.show();
 
         } catch (IOException e) {
