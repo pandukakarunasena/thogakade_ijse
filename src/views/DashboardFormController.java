@@ -60,6 +60,7 @@ public class DashboardFormController {
         colDateRecOrd.setCellValueFactory(new PropertyValueFactory<>("date"));
         loadRecentOrders();
 
+        //monhaHARI KARANNNA
         totalSales = DashboardController.getTotalSales();
         totalLeft = DashboardController.getTotalItemsLeft();
         totalOrdered = DashboardController.getTotalItemsOrdered();

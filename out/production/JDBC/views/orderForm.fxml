@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -12,17 +13,32 @@
 
 <AnchorPane fx:id="orderFormPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1200.0" style="-fx-background-color: #CED2CC;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.OrderFormController">
    <children>
-      <TextField fx:id="txtOrderId" layoutX="236.0" layoutY="52.0" prefHeight="25.0" prefWidth="100.0" />
-      <TextField fx:id="txtCustomer" layoutX="425.0" layoutY="52.0" prefHeight="25.0" prefWidth="100.0" />
-      <Button fx:id="btnCLearFields" layoutX="535.0" layoutY="52.0" mnemonicParsing="false" onAction="#clearFieldsAndLists" text="Clear Feilds" />
+      <TextField fx:id="txtOrderId" layoutX="236.0" layoutY="52.0" prefHeight="25.0" prefWidth="100.0">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <TextField fx:id="txtCustomer" layoutX="425.0" layoutY="52.0" prefHeight="25.0" prefWidth="100.0">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <Button fx:id="btnCLearFields" layoutX="535.0" layoutY="52.0" mnemonicParsing="false" onAction="#clearFieldsAndLists" text="Clear Feilds">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button fx:id="btnAdd" layoutX="641.0" layoutY="49.0" mnemonicParsing="false" onAction="#addOrder" style="-fx-background-color: #b3c100;" text="Add" textFill="WHITE">
          <font>
             <Font size="15.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button fx:id="btnDelete" layoutX="693.0" layoutY="49.0" mnemonicParsing="false" onAction="#deleteOrder" style="-fx-background-color: #d32d41;" text="Delete" textFill="WHITE">
          <font>
             <Font size="15.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label layoutX="188.0" layoutY="56.0" text="OrderID" />
       <Label alignment="CENTER" prefHeight="35.0" prefWidth="1200.0" style="-fx-background-color: #003f5c;" text="Add Order" textFill="WHITE">
          <font>
@@ -58,7 +74,10 @@
          </font>
          <graphic>
             <FontAwesomeIconView glyphName="ARROW_LEFT" size="20" />
-         </graphic></Button>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <FontAwesomeIconView fill="WHITE" glyphName="SHOPPING_CART" layoutX="526.0" layoutY="25.0" size="20" />
    </children>
 </AnchorPane>
