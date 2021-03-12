@@ -3,6 +3,8 @@
 ##How to setup 
 
 1. You must have MYSQL installed in your computer
+   1. create a database
+    2.add the URL USERNAME and PASSWORD to the DATABASE class file
 2. Copy and paste the SQL scripts in the ThogaKade.txt and it in your preferred
 client
 3. Run the Application 
