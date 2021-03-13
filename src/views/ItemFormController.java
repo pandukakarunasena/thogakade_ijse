@@ -1,5 +1,6 @@
 package views;
 
+import controllers.DashboardController;
 import controllers.ItemController;
 import controllers.ItemController;
 import javafx.collections.FXCollections;
@@ -52,6 +53,7 @@ public class ItemFormController {
 
             if(isAdded){
                 new Alert(Alert.AlertType.CONFIRMATION, "success", ButtonType.OK).show();
+                DashboardFormController.setTotalLeftDetail();
                 loadItems();
                 clearFields();
             }
@@ -72,6 +74,7 @@ public class ItemFormController {
             ));
             if(hasEdited){
                 new Alert(Alert.AlertType.CONFIRMATION, "success", ButtonType.OK).show();
+                DashboardController.getTotalItemsLeft();
                 loadItems();
                 clearFields();
             }else{
@@ -86,6 +89,7 @@ public class ItemFormController {
             new Alert(Alert.AlertType.ERROR, "specify an item code", ButtonType.CLOSE).show();
         }else{
             Item deletedItem = ItemController.deleteItem(txtCode.getText());
+            DashboardController.getTotalItemsLeft();
             loadItems();
             clearFields();
         }

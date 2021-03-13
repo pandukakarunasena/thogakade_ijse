@@ -7,14 +7,16 @@ public class Order {
     private String id;
     private LocalDate date;
     private String customerId;
+    private String orderStatus;
 
     public Order() {
     }
 
-    public Order(String id, LocalDate date, String customerId) {
+    public Order(String id, LocalDate date, String customerId, String orderStatus) {
         this.id = id;
         this.date = date;
         this.customerId = customerId;
+        this.orderStatus = orderStatus;
     }
 
     public String getId() {
@@ -40,6 +42,15 @@ public class Order {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
 
     @Override
     public String toString() {

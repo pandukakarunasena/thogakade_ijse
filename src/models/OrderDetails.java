@@ -9,18 +9,20 @@ public class OrderDetails {
     private Date date;
     private String items;
     private double totalPrice;
+    private String orderStatus;
 
 
     public OrderDetails() {
     }
 
-    public OrderDetails(String id, String name, String address, Date date,String items, double totalPrice) {
+    public OrderDetails(String id, String name, String address, Date date,String items, double totalPrice, String orderStatus) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.date = date;
         this.items = items;
         this.totalPrice = totalPrice;
+        this.orderStatus = orderStatus;
     }
 
     public String getId() {
@@ -69,5 +71,14 @@ public class OrderDetails {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

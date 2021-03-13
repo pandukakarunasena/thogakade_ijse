@@ -42,7 +42,7 @@ public class DashboardFormController {
     public Label lblTotalSales;
     public Label lblItemOrdered;
 
-    private int totalSales, totalOrdered, totalLeft ;
+    private static int totalSales, totalOrdered, totalLeft ;
     private int countUpSales, countUpOrdered, countUpLeft = 0;
 
 
@@ -60,10 +60,15 @@ public class DashboardFormController {
         colDateRecOrd.setCellValueFactory(new PropertyValueFactory<>("date"));
         loadRecentOrders();
 
-        //monhaHARI KARANNNA
-        totalSales = DashboardController.getTotalSales();
-        totalLeft = DashboardController.getTotalItemsLeft();
-        totalOrdered = DashboardController.getTotalItemsOrdered();
+        if(totalOrdered == 0){
+           totalOrdered = DashboardController.getTotalItemsOrdered();
+        }
+        if(totalLeft == 0){
+            totalLeft = DashboardController.getTotalItemsLeft();
+        }
+        if(totalSales == 0){
+            totalSales = DashboardController.getTotalSales();
+        }
 
         animationTotalSales.setCycleCount(Timeline.INDEFINITE);
         animationTotalSales.play();
@@ -74,6 +79,14 @@ public class DashboardFormController {
         animationItemsLeft.setCycleCount(Timeline.INDEFINITE);
         animationItemsLeft.play();
 
+    }
+
+    public static void setTotalSalesDetail(){
+        totalSales = DashboardController.getTotalSales();
+    }
+    public static void setTotalLeftDetail(){ totalLeft = DashboardController.getTotalItemsLeft(); }
+    public static void setTotalOrderedDetail(){
+        totalOrdered = DashboardController.getTotalItemsOrdered();
     }
 
     public void addCustomer(ActionEvent actionEvent) throws IOException {
@@ -113,6 +126,8 @@ public class DashboardFormController {
 
     }
 
+
+    //==========================================ANIMATIONS=====================================================>
     Timeline animationItemsLeft = new Timeline(new KeyFrame(Duration.millis(0.5), e -> countUpItemsLeft()));
     Timeline animationItemsOrdered = new Timeline(new KeyFrame(Duration.millis(1), e -> countUpItemsOrdered()));
     Timeline animationTotalSales = new Timeline(new KeyFrame(Duration.millis(1), e -> countUpTotalSales()));

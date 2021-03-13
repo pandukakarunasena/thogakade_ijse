@@ -1,17 +1,21 @@
 package views;
 
+import controllers.DashboardController;
 import controllers.ItemController;
 import controllers.OrderController;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Item;
@@ -37,6 +41,7 @@ public class OrderFormController {
     public TableColumn colDate;
     public TableColumn colPrice;
     public TableColumn colAddress;
+    public TableColumn colStatus;
     public TableView ordersTable;
 
     public ListView itemsListView;
@@ -50,12 +55,14 @@ public class OrderFormController {
     public TableView itemsTable;
 
     public void initialize(){
+
         colOrderId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colCustomer.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colItems.setCellValueFactory(new PropertyValueFactory<>("items"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
 
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -64,17 +71,57 @@ public class OrderFormController {
 
         loadItems();
         loadOrders();
-    }
+
+        //========render the table rows as the order status====>>>>
+        ordersTable.setRowFactory(tv -> new TableRow<OrderDetails>() {
+            @Override
+            protected void updateItem(OrderDetails item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || item == null)
+                    setStyle("");
+                else if (item.getOrderStatus().equals("completed"))
+                    setStyle("-fx-background-color: #a0d468;");
+                else if (item.getOrderStatus().equals("pending"))
+                    setStyle("-fx-background-color: #ed5565;");
+                else if(item.getOrderStatus().equals("ready"))
+                    setStyle("-fx-background-color: #48cffd;");
+                else
+                    setStyle("");
+            }
+        });
+
+        //======================right click event listener on table=====================>>>>>>>
+        MenuItem mi1 = new MenuItem("ready");
+        MenuItem mi2 = new MenuItem("completed");
+        mi1.setOnAction((ActionEvent event) -> {
+            OrderDetails item = (OrderDetails) ordersTable.getSelectionModel().getSelectedItem();
+            OrderController.setOrderStatusReady(item.getId());
+            loadOrders();
+        });
+        mi2.setOnAction((ActionEvent event) -> {
+            OrderDetails item = (OrderDetails) ordersTable.getSelectionModel().getSelectedItem();
+            OrderController.setOrderStatusCompleted(item.getId());
+            loadOrders();
+        });
+
+        ContextMenu menu = new ContextMenu();
+        menu.getItems().add(mi1);
+        menu.getItems().add(mi2);
+        ordersTable.setContextMenu(menu);
+     }
 
     public void addOrder(ActionEvent actionEvent) {
         if(inputFieldValidator()){
             if(itemListItems.size() ==0){
                 new Alert(Alert.AlertType.ERROR, "you must select at least one item to proceed", ButtonType.CLOSE).show();
             }else{
+                String orderStatus = "pending";
                 Order order = new Order(
                         txtOrderId.getText(),
                         LocalDate.now(),
-                        txtCustomer.getText());
+                        txtCustomer.getText(),
+                        orderStatus
+                );
 
                 boolean isAdded = OrderController.addOrder(order, itemListItems);
 
@@ -90,6 +137,9 @@ public class OrderFormController {
                     if(result.get() ==buttonTypeTwo){
                         alert.close();
                     }
+                    DashboardFormController.setTotalSalesDetail();
+                    DashboardFormController.setTotalOrderedDetail();
+                    DashboardFormController.setTotalLeftDetail();
                     clearFields();
                     clearLists();
                     loadOrders();
@@ -104,6 +154,7 @@ public class OrderFormController {
         txtCustomer.setText("");
 
     }
+
     private void clearLists(){
         itemListItems.clear();
         itemListItemsOnlyDescriptions.clear();
@@ -136,7 +187,6 @@ public class OrderFormController {
     public void deleteOrder(ActionEvent actionEvent) {
         if(txtOrderId.getText().equals("")){
             new Alert(Alert.AlertType.ERROR, "specify an order ID", ButtonType.CLOSE).show();
-
         }else{
             boolean isDeleted = OrderController.deleteOrder(txtOrderId.getText());
             if(isDeleted){
@@ -145,27 +195,29 @@ public class OrderFormController {
                 clearFields();
                 loadOrders();
             }else{
-                new Alert(Alert.AlertType.ERROR, "failed", ButtonType.CLOSE).show();
+                new Alert(Alert.AlertType.ERROR, "failed, cannot delete pending orders", ButtonType.CLOSE).show();
             }
         }
     }
 
     public void selectOrder(MouseEvent mouseEvent){
-        OrderDetails orderDetails =(OrderDetails) ordersTable.getSelectionModel().getSelectedItem();
+        if(mouseEvent.getButton() == MouseButton.PRIMARY){
+            OrderDetails orderDetails =(OrderDetails) ordersTable.getSelectionModel().getSelectedItem();
 
-        //add items to itemListItems and itemListItemsOnlyDescription
-        ArrayList<Item> orderedItems = OrderController.getAllItemsOrdered(orderDetails.getId());
-        for(Item item: orderedItems){
-            item.setItemTotalPrice();
-            itemListItems.add(item);
-            itemListItemsOnlyDescriptions.add(item.getDescription());
+            //add items to itemListItems and itemListItemsOnlyDescription
+            ArrayList<Item> orderedItems = OrderController.getAllItemsOrdered(orderDetails.getId());
+            for(Item item: orderedItems){
+                item.setItemTotalPrice();
+                itemListItems.add(item);
+                itemListItemsOnlyDescriptions.add(item.getDescription());
+            }
+
+            txtOrderId.setText(orderDetails.getId());
+            txtCustomer.setText(orderDetails.getName());
+
+            //adding item description to current selected item view
+            itemsListView.setItems(FXCollections.observableArrayList(orderDetails.getItems().split(",")));
         }
-
-        txtOrderId.setText(orderDetails.getId());
-        txtCustomer.setText(orderDetails.getName());
-
-        //adding item description to current selected item view
-        itemsListView.setItems(FXCollections.observableArrayList(orderDetails.getItems().split(",")));
     }
 
     private void loadOrders(){

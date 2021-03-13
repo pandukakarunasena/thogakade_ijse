@@ -66,7 +66,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="254.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Search Item">
+      <Button disable="true" layoutX="254.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Search Item">
          <font>
             <Font size="15.0" />
          </font>
