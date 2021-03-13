@@ -56,14 +56,15 @@
             <TableColumn fx:id="colQtyOnHand" prefWidth="73.0" text="qty on hand" />
         </columns>
       </TableView>
-      <TableView fx:id="ordersTable" layoutX="599.0" layoutY="118.0" onMouseClicked="#selectOrder" prefHeight="274.0" prefWidth="597.0" style="-fx-border-color: black;">
+      <TableView fx:id="ordersTable" layoutX="599.0" layoutY="118.0" onMouseClicked="#selectOrder" prefHeight="274.0" prefWidth="596.0" style="-fx-border-color: black;">
         <columns>
           <TableColumn fx:id="colOrderId" prefWidth="75.0" text="orderID" />
           <TableColumn fx:id="colCustomer" prefWidth="75.0" text="name" />
             <TableColumn fx:id="colAddress" prefWidth="75.0" text="address" />
             <TableColumn fx:id="colDate" prefWidth="75.0" text="date" />
-            <TableColumn fx:id="colItems" prefWidth="229.0" text="items" />
-            <TableColumn fx:id="colPrice" prefWidth="67.0" text="total price" />
+            <TableColumn fx:id="colItems" minWidth="0.0" prefWidth="152.0" text="items" />
+            <TableColumn fx:id="colPrice" prefWidth="76.0" text="total price" />
+            <TableColumn fx:id="colStatus" prefWidth="64.0" text="status" />
         </columns>
       </TableView>
       <Label layoutX="20.0" layoutY="94.0" text="Current Order Items" />
