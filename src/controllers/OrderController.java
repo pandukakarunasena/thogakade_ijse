@@ -13,11 +13,11 @@ public class OrderController {
     public static ArrayList<OrderDetails> getAllOrders() {
         ArrayList<OrderDetails> ordersList = new ArrayList<>();
         try{
-            String getAllOrders = "select orderdetail.orderId, orderinfo.name, orderinfo.address,orderinfo.date, group_concat(item.description) as items, (sum(orderdetail.qty*orderdetail.unitPrice)) as total_price, orderinfo.order_status as status \n" +
+            String getAllOrders = "select orderdetail.orderId, orderinfo.name, orderinfo.id as customerId,orderinfo.address,orderinfo.date, group_concat(item.description) as items, (sum(orderdetail.qty*orderdetail.unitPrice)) as total_price, orderinfo.order_status as status \n" +
                     "from orderdetail\n" +
                     "inner join item\n" +
                     "on orderdetail.itemCode= item.code\n" +
-                    "inner join (select orders.id as orderID, customer.name, customer.address, orders.date, orders.order_status\n" +
+                    "inner join (select orders.id as orderID,customer.id, customer.name, customer.address, orders.date, orders.order_status\n" +
                     "\t\t\tfrom orders\n" +
                     "\t\t\tinner join customer \n" +
                     "\t\t\ton orders.customerId = customer.id) as orderinfo\n" +
@@ -34,7 +34,8 @@ public class OrderController {
                         rs.getDate("date"),
                         rs.getString("items"),
                         rs.getDouble("total_price"),
-                        rs.getString("status")
+                        rs.getString("status"),
+                        rs.getString("customerId")
                 );
                 ordersList.add(order);
             }

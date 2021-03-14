@@ -2,6 +2,7 @@ package controllers;
 
 import database.Database;
 import javafx.scene.control.TextField;
+import middlewares.CustomException;
 import models.Customer;
 
 import java.sql.PreparedStatement;
@@ -32,7 +33,7 @@ public class CustomerController {
             }
             ps.close();
 
-        } catch (SQLException throwables) {
+        } catch (CustomException throwables) {
             System.out.println("SQLException");
             throwables.printStackTrace();
             return false;
@@ -136,7 +137,6 @@ public class CustomerController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return customerList;
     }
 

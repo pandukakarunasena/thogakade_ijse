@@ -1,5 +1,6 @@
 package views;
 
+import controllers.CustomerController;
 import controllers.DashboardController;
 import controllers.ItemController;
 import controllers.OrderController;
@@ -18,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import models.Customer;
 import models.Item;
 import models.Order;
 import models.OrderDetails;
@@ -53,6 +55,9 @@ public class OrderFormController {
     public TableColumn colUnitPrice;
     public TableColumn colQtyOnHand;
     public TableView itemsTable;
+    public ComboBox cmbCustomerList;
+
+    public Label crntOrderTotal;
 
     public void initialize(){
 
@@ -90,6 +95,9 @@ public class OrderFormController {
             }
         });
 
+        //====================grab the customerIds and fill the combo box===================>
+        fillCustomerCmbBox();
+
         //======================right click event listener on table=====================>>>>>>>
         MenuItem mi1 = new MenuItem("ready");
         MenuItem mi2 = new MenuItem("completed");
@@ -108,7 +116,27 @@ public class OrderFormController {
         menu.getItems().add(mi1);
         menu.getItems().add(mi2);
         ordersTable.setContextMenu(menu);
-     }
+    }
+
+    public void fillCustomerCmbBox(){
+        ArrayList<Customer> customerList = CustomerController.getAllCustomers();
+        for(Customer customer: customerList){
+            cmbCustomerList.getItems().add(customer.getId());
+        }
+    }
+
+    public void selectCustomerIdCmb(ActionEvent actionEvent) {
+
+    }
+
+    private void loadOrders(){
+        ArrayList<OrderDetails> ordersList = OrderController.getAllOrders();
+        if(ordersList == null){
+            new Alert(Alert.AlertType.ERROR, "no order records", ButtonType.CLOSE).show();
+        }else{
+            ordersTable.setItems(FXCollections.observableArrayList(ordersList));
+        }
+    }
 
     public void addOrder(ActionEvent actionEvent) {
         if(inputFieldValidator()){
@@ -119,7 +147,7 @@ public class OrderFormController {
                 Order order = new Order(
                         txtOrderId.getText(),
                         LocalDate.now(),
-                        txtCustomer.getText(),
+                        (String) cmbCustomerList.getValue(),
                         orderStatus
                 );
 
@@ -143,22 +171,12 @@ public class OrderFormController {
                     clearFields();
                     clearLists();
                     loadOrders();
+                    crntOrderTotal.setText("0");
                 }else{
                     new Alert(Alert.AlertType.ERROR, "failed", ButtonType.CLOSE).show();
                 }
             };
         }
-    }
-    private void clearFields() {
-        txtOrderId.setText("");
-        txtCustomer.setText("");
-
-    }
-
-    private void clearLists(){
-        itemListItems.clear();
-        itemListItemsOnlyDescriptions.clear();
-        itemsListView.setItems(FXCollections.observableArrayList(itemListItemsOnlyDescriptions));
     }
 
     private void showOrderInvoice(Order order, ArrayList<Item> itemListItems){
@@ -213,24 +231,18 @@ public class OrderFormController {
             }
 
             txtOrderId.setText(orderDetails.getId());
-            txtCustomer.setText(orderDetails.getName());
+            cmbCustomerList.setValue(orderDetails.getCustomerId());
+            crntOrderTotal.setText(String.valueOf(orderDetails.getTotalPrice()));
 
             //adding item description to current selected item view
             itemsListView.setItems(FXCollections.observableArrayList(orderDetails.getItems().split(",")));
         }
     }
 
-    private void loadOrders(){
-        ArrayList<OrderDetails> ordersList = OrderController.getAllOrders();
-        if(ordersList == null){
-            new Alert(Alert.AlertType.ERROR, "no order records", ButtonType.CLOSE).show();
-        }else{
-            ordersTable.setItems(FXCollections.observableArrayList(ordersList));
-        }
-    }
+
 
     public void selectItem(javafx.scene.input.MouseEvent mouseEvent) {
-        if(txtOrderId.getText().equals("") || txtCustomer.getText().equals("")){
+        if(txtOrderId.getText().equals("") || cmbCustomerList.getValue() == null){
             new Alert(Alert.AlertType.ERROR, "cannot leave the fields empty", ButtonType.CLOSE).show();
         }else{
             Item item = (Item) itemsTable.getSelectionModel().getSelectedItem();
@@ -241,12 +253,18 @@ public class OrderFormController {
             dialog.setContentText("Enter the amount needed:");
             dialog.setHeaderText(null);
             Optional<String> result = dialog.showAndWait();
+
             if (result.isPresent()){
                 item.setOrderedQty(Integer.parseInt(result.get()));
                 item.setItemTotalPrice();
+
+                //update the order total label
+                crntOrderTotal.setText(String.valueOf(Double.parseDouble(crntOrderTotal.getText()) + item.getItemTotalPrice()));
+
                 //subtract from the qty_on_hand in the item table
                 OrderController.subFromItemTable(item.getCode(), Integer.parseInt(result.get()));
                 loadItems();
+
                 //add items to send with the order
                 itemListItems.add(item);
 
@@ -280,12 +298,23 @@ public class OrderFormController {
     }
 
     private boolean inputFieldValidator(){
-        if(txtOrderId.getText().equals("")||
-                txtCustomer.getText().equals("")
-        ){
+        if(txtOrderId.getText().equals("")|| cmbCustomerList.getValue() == null){
             new Alert(Alert.AlertType.ERROR, "cannot leave the fields empty", ButtonType.CLOSE).show();
             return false;
         }
         return true;
     }
+
+    private void clearFields() {
+        txtOrderId.setText("");
+        cmbCustomerList.setValue(null);
+        crntOrderTotal.setText("0");
+    }
+
+    private void clearLists(){
+        itemListItems.clear();
+        itemListItemsOnlyDescriptions.clear();
+        itemsListView.setItems(FXCollections.observableArrayList(itemListItemsOnlyDescriptions));
+    }
+
 }

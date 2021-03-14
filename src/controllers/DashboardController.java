@@ -1,6 +1,8 @@
 package controllers;
 
 import database.Database;
+import javafx.scene.chart.XYChart;
+import javafx.scene.shape.TriangleMesh;
 import models.ItemAvailable;
 import models.OrderDetails;
 import models.OrderRecent;
@@ -110,5 +112,15 @@ public class DashboardController {
             e.printStackTrace();
         }
         return itemLeft;
+    }
+
+    public static XYChart.Series populateChart() {
+        XYChart.Series series1 = new XYChart.Series();
+        ArrayList<OrderDetails> orderDetails = OrderController.getAllOrders();
+
+        for(OrderDetails od : orderDetails){
+            series1.getData().add(new XYChart.Data<String, Double>(String.valueOf(od.getDate()), od.getTotalPrice()));
+        }
+        return series1;
     }
 }

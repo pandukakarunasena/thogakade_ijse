@@ -10,12 +10,13 @@ public class OrderDetails {
     private String items;
     private double totalPrice;
     private String orderStatus;
+    private String customerId;
 
 
     public OrderDetails() {
     }
 
-    public OrderDetails(String id, String name, String address, Date date,String items, double totalPrice, String orderStatus) {
+    public OrderDetails(String id, String name, String address, Date date,String items, double totalPrice, String orderStatus, String customerId) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -23,6 +24,7 @@ public class OrderDetails {
         this.items = items;
         this.totalPrice = totalPrice;
         this.orderStatus = orderStatus;
+        this.customerId = customerId;
     }
 
     public String getId() {
@@ -80,5 +82,13 @@ public class OrderDetails {
 
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }

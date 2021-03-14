@@ -1,9 +1,7 @@
 package middlewares;
 
-import java.sql.SQLException;
-
-public class CustomException {
+public class CustomException extends Exception{
     public static void exception(Exception ex){
-
+        ex.getMessage();
     }
 }

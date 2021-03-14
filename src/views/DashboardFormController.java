@@ -9,6 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -45,6 +49,8 @@ public class DashboardFormController {
     private static int totalSales, totalOrdered, totalLeft ;
     private int countUpSales, countUpOrdered, countUpLeft = 0;
 
+    public LineChart dbSalesPerDayChart;
+    public XYChart.Series series1;
 
     public void initialize(){
         //item availability table
@@ -79,6 +85,8 @@ public class DashboardFormController {
         animationItemsLeft.setCycleCount(Timeline.INDEFINITE);
         animationItemsLeft.play();
 
+        populateChart();
+
     }
 
     public static void setTotalSalesDetail(){
@@ -87,6 +95,11 @@ public class DashboardFormController {
     public static void setTotalLeftDetail(){ totalLeft = DashboardController.getTotalItemsLeft(); }
     public static void setTotalOrderedDetail(){
         totalOrdered = DashboardController.getTotalItemsOrdered();
+    }
+
+    public void populateChart(){
+        series1 = DashboardController.populateChart();
+        dbSalesPerDayChart.getData().add(series1);
     }
 
     public void addCustomer(ActionEvent actionEvent) throws IOException {
